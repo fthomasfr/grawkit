@@ -371,7 +371,7 @@ BEGIN {
 	style["label/text"]      = "#fff"
 	style["label/text-commit"] = "#222"
 	style["label/font"]      = "Sukhumvit Set" # "Inconsolata, Consolas, monospace"
-	style["label/font-commit"] = "Sukhumvit Set"
+	style["label/font-commit"] = "'Source Sans Pro', Helvetica, sans-serif" #"'Century Gothic', CenturyGothic, AppleGothic, sans-serif;"
 	style["label/font-size"] = "14"
 
 	# Color scheme, based on `base16-solarized-dark`
