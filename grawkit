@@ -105,7 +105,7 @@ function render_branch(idx, _, buf, tmp, refs, tags, t, i, n, hspc, vspc) {
 
 	# Add branch name.
 	buf = buf render_label(idx, "branch", branches[idx,"name"])
-
+	
 	# Add path for branch.
 	tmp = "M" hspc "," refs[1] * style["commit/spacing"]
 	tmp = tmp " L" hspc "," refs[count(refs)] * style["commit/spacing"]
@@ -117,11 +117,17 @@ function render_branch(idx, _, buf, tmp, refs, tags, t, i, n, hspc, vspc) {
 	for (i = 1; i <= n; i++) {
 		vspc = refs[i] * style["commit/spacing"]
 		if(commits[refs[i],"message"] ~ /^Release:/){
+			hspcTag = (len["branches"] * style["branch/spacing"]) + label_offset[idx] + hoffset
+			tmp = "M" hspcTag "," vspc
+			tmp = tmp " L" hCommitOffset "," vspc
+			tmp = sprintf(svg["path-release"], tmp)
+			buf = buf "\n\t" tmp
 			tmp = sprintf(svg["circle-bold"], hspc, vspc, style["commit/radius"])
 		}else{
 			tmp = sprintf(svg["circle"], hspc, vspc, style["commit/radius"])
 		}
 		buf = buf "\n\t" tmp
+
 	}
 
 	# Add branch tags as labels.
@@ -145,7 +151,7 @@ function render_branch(idx, _, buf, tmp, refs, tags, t, i, n, hspc, vspc) {
 # > Function `render_label` adds a sidebar label at commit index, with a specific
 # > class and label name. Multiple labels for the same index will be placed
 # > side-by-side.
-function render_label(idx, class, name, _, buf, tw, w, h, hspc, vspc) {
+function render_label(idx, class, name,_, buf, tw, w, h, hspc, vspc) {
 	# Set specific length for text. Pitch size is approximately right for most fixed-width fonts,
 	# which are usually twice as tall as they are wide, but may vary for other fonts.
 	tw = (style["label/font-size"] * 0.5) * length(name)
@@ -180,13 +186,16 @@ function render_label(idx, class, name, _, buf, tw, w, h, hspc, vspc) {
 		}else{
 			buf = buf "\n\t\t" sprintf(svg["text-commit"], style["label/spacing"] / 2, style["label/spacing"] / 4, tw, name)
 		}
-		buf = buf "\n\t" svg["/g"]
+	}else if(class == "tag" && commits[idx,"message"] ~ /^Release:/){
+		buf = buf "\n\t" sprintf(svg["gg"], "label-" class, hspc, vspc)
+		buf = buf "\n\t\t" sprintf(svg["rect-bold"], 0, style["label/font-size"] * -1, w, h, style["label/round"])
+		buf = buf "\n\t\t" sprintf(svg["text-commit-bold"], style["label/spacing"] / 2, style["label/spacing"] / 4, tw, name)
 	}else{
 		buf = buf "\n\t" sprintf(svg["gg"], "label-" class, hspc, vspc)
 		buf = buf "\n\t\t" sprintf(svg["rect"], 0, style["label/font-size"] * -1, w, h, style["label/round"])
 		buf = buf "\n\t\t" sprintf(svg["text"], style["label/spacing"] / 2, style["label/spacing"] / 4, tw, name)
-		buf = buf "\n\t" svg["/g"]
 	}
+	buf = buf "\n\t" svg["/g"]
 	return buf
 }
 
@@ -358,6 +367,7 @@ BEGIN {
 	style["branch/spacing"]      = "30"
 	style["branch/fill"]         = "none"
 	style["branch/stroke-width"] = "6"
+	style["path-release/dasharray"] = "1"
 
 	style["commit/spacing"]      = "30"
 	style["commit/fill"]         = "#fff"
@@ -375,7 +385,7 @@ BEGIN {
 	style["label/font-size"] = "14"
 
 	# Color scheme, based on `base16-solarized-dark`
-	style["pallete"] = "#002b36,#268bd2,#859900,#cb4b16,#2aa198,#dc322f,#d33682,#6c71c4,#b58900"
+	style["pallete"] = "#002b36,#268bd2,#859900,#cb9116,#2aa198,#dc322f,#d33682,#6c71c4,#b58900"
 
 	# Static SVG templates.
 	svg["svg"]    = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"%d %d %d %d\">"
@@ -384,6 +394,7 @@ BEGIN {
 	svg["gg"]     = "<g class=\"%s\" transform=\"translate(%d,%d)\">"
 	svg["/g"]     = "</g>"
 	svg["path"]   = "<path class=\"branch\" d=\"%s\" />"
+	svg["path-release"]   = "<path class=\"path-release\" d=\"%s\" />"
 	svg["circle"] = "<circle class=\"commit\" cx=\"%d\" cy=\"%d\" r=\"%s\" />"
 	svg["circle-bold"] = "<circle class=\"commit-bold\" cx=\"%d\" cy=\"%d\" r=\"%s\" />"
 	svg["rect-bold"]   = "<rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"%d\" class=\"label-rect-bold\" />"
@@ -394,7 +405,7 @@ BEGIN {
 
 	# Branch definitions.
 	# master is prod
-	branches[0,"name"] = "Production"
+	branches[0,"name"] = "Industrialization"
 	branches[0,"refs"] = ""
 	branches[0,"merges"] = "0||0"
 	branches[0,"tags"]   = ""
@@ -615,6 +626,11 @@ END {
 	print "\tfill: " style["branch/fill"] ";"
 	print "\tstroke-width: " style["branch/stroke-width"] ";"
 	print "\tstroke-linecap: round;"
+	print "}"
+	print ".path-release {"
+	print "\tstroke: " style["commit-bold/fill"] ";"
+	print "\tstroke-width: " style["branch/stroke-width"]/2 ";"
+	print "\tz-index: 100;"
 	print "}"
 	print ".commit {"
 	print "\tfill: " style["commit/fill"] ";"
