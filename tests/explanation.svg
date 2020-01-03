@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 596 192">
+<style type="text/css"><![CDATA[
+.branch {
+	fill: none;
+	stroke-width: 6;
+	stroke-linecap: round;
+}
+.path-release {
+	stroke: lightblue;
+	stroke-width: 3;
+	z-index: 100;
+}
+.commit {
+	fill: #fff;
+	stroke-width: 3;
+}
+.commit-bold {
+	fill: lightblue;
+	stroke-width: 3;
+}
+.label-tag {
+}
+.label-rect {
+	stroke: none;
+}
+.label-rect-bold {
+	stroke: none;
+	fill: lightblue;
+}
+.label-text {
+	font-family: Sukhumvit Set;
+	font-size: 14px;
+	fill: #fff;
+	stroke: none;
+}
+.label-text-commit {
+	font-family: 'Source Sans Pro', Helvetica, sans-serif;
+	font-size: 14px;
+	stroke: none;
+}
+.label-text-commit-bold {
+	font-family: 'Source Sans Pro', Helvetica, sans-serif;
+	font-size: 14px;
+	stroke: none;
+}
+.branch-industrialization {stroke: #002b36; fill: #002b36}
+.branch-parrallel-activity-to-scope {stroke: #268bd2; fill: #268bd2}
+]]></style>
+<g class="merge">
+	<g class="branch-parrallel-activity-to-scope">
+		<path class="branch" d="M209,60 C239,60 239,60 239,90" />
+		<path class="branch" d="M209,120 C239,120 239,120 239,90" />
+	</g>
+	<g class="branch-industrialization">
+		<path class="branch" d="M209,0 C209,0 209,0 209,30" />
+		<path class="branch" d="M209,150 L209,180" />
+	</g>
+</g>
+<g class="branch-parrallel-activity-to-scope">
+	<g class="label-branch" transform="translate(0,58)">
+		<rect x="0" y="-14" width="199" height="24" rx="3" class="label-rect" />
+		<text x="5" y="2" textLength="189" class="label-text">Parrallel_Activity_To_Scope</text>
+	</g>
+	<path class="branch" d="M239,90 L239,90" />
+	<circle class="commit" cx="239" cy="90" r="4.5" />
+	<g class="label-commit" transform="translate(345,90)">
+		<text x="5" y="2" textLength="231" class="label-text-commit">Expected parallel activity result</text>
+	</g>
+</g>
+<g class="branch-industrialization">
+	<g class="label-branch" transform="translate(0,24)">
+		<rect x="0" y="-14" width="129" height="24" rx="3" class="label-rect" />
+		<text x="5" y="2" textLength="119" class="label-text">Industrialization</text>
+	</g>
+	<path class="branch" d="M209,30 L209,150" />
+	<circle class="commit" cx="209" cy="30" r="4.5" />
+	<circle class="commit" cx="209" cy="60" r="4.5" />
+	<circle class="commit" cx="209" cy="120" r="4.5" />
+	<path class="path-release" d="M269,150 L345,150" />
+	<circle class="commit-bold" cx="209" cy="150" r="4.5" />
+	<g class="label-tag" transform="translate(269,30)">
+		<rect x="0" y="-14" width="66" height="24" rx="3" class="label-rect" />
+		<text x="5" y="2" textLength="56" class="label-text">Assignee</text>
+	</g>
+	<g class="label-tag" transform="translate(269,150)">
+		<rect x="0" y="-14" width="31" height="24" rx="3" class="label-rect-bold" />
+		<text x="5" y="2" textLength="21" class="label-text-commit-bold">X.Y</text>
+	</g>
+	<g class="label-commit" transform="translate(345,30)">
+		<text x="5" y="2" textLength="175" class="label-text-commit">Expected activity1 result</text>
+	</g>
+	<g class="label-commit" transform="translate(345,60)">
+		<text x="5" y="2" textLength="175" class="label-text-commit">Expected activity2 result</text>
+	</g>
+	<g class="label-commit" transform="translate(345,120)">
+		<text x="5" y="2" textLength="0" class="label-text-commit"></text>
+	</g>
+	<g class="label-commit" transform="translate(345,150)">
+		<rect x="0" y="-14" width="234" height="24" rx="3" class="label-rect-bold" />
+		<text x="5" y="2" textLength="224" class="label-text-commit-bold">Release: An expected X.Y release</text>
+	</g>
+</g>
+</svg>

@@ -25,32 +25,32 @@ In order to use this tool, either run the `grawkit` executable against a file co
 input. For instance, given the following file `test.txt`:
 
 ```sh
-git commit -m "Commit on master"
-git commit -m "More stuff"
-
-git branch test-stuff
-git checkout test-stuff
-
-git commit -m 'Testing stuff'
-git commit
-
-git checkout master
-git commit
+git checkout Industrialization
+git commit -m "Expected activity1 result"
+git tag Assignee
+git commit -m "Expected activity2 result"
+git branch Parrallel_Activity_To_Scope
+git checkout Parrallel_Activity_To_Scope
+git commit -m "Expected parallel activity result"
+git checkout Industrialization
+git merge Parrallel_Activity_To_Scope
+git commit -m "Release: An expected X.Y release"
+git tag X.Y
 ```
 
 You can execute either:
 
 ```sh
-cat test.txt | grawkit
-# or
-grawkit test.txt
+grawkit explanation.rmp > test.svg
 ```
 
 Which will produce SVG markup to standard output, rendered as:
 
 <p align="center"> <img
-src="https://rawgit.com/deuill/grawkit/892a5cec4dee58838fb18f87fcb00f9d8f4d35a8/tests/03-branch.svg"
+src="https://github.com/fthomasfr/grawkit/blob/roadmap/tests/explanation.svg"
 alt="" width="300"></p>
+
+If the commit use the convention "Release:", grawkit generates a specific display for this commit.
 
 ## License
 

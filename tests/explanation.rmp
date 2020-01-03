@@ -1,0 +1,11 @@
+git checkout Industrialization
+git commit -m "Expected activity1 result"
+git tag Assignee
+git commit -m "Expected activity2 result"
+git branch Parrallel_Activity_To_Scope
+git checkout Parrallel_Activity_To_Scope
+git commit -m "Expected parallel activity result"
+git checkout Industrialization
+git merge Parrallel_Activity_To_Scope
+git commit -m "Release: An expected X.Y release"
+git tag X.Y
